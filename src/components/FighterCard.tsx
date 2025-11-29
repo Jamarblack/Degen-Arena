@@ -35,10 +35,17 @@ const FighterCard = ({
         <h3 className="text-xs md:text-sm font-header font-bold text-muted-foreground uppercase tracking-widest mb-3 shadow-emboss">
           {title}
         </h3>
-        <div className="h-24 w-24 md:h-32 md:w-32 mx-auto bg-gradient-to-br from-primary/30 via-primary/20 to-secondary/30 rounded-full flex items-center justify-center border-4 border-primary/50 shadow-bronze">
-          <span className="text-4xl md:text-5xl font-display font-black text-primary drop-shadow-lg">
-            {coinName}
-          </span>
+        <div className="relative h-32 w-32 md:h-40 md:w-40 mx-auto">
+          {/* Outer coin ring - bright bronze/gold */}
+          <div className="absolute inset-0 rounded-full bg-gradient-to-br from-primary via-accent to-primary/80 shadow-bronze animate-pulse-slow"></div>
+          {/* Inner coin face */}
+          <div className="absolute inset-2 rounded-full bg-gradient-to-br from-primary/95 via-accent/90 to-primary/85 border-4 border-primary/30 flex items-center justify-center shadow-[inset_0_4px_8px_rgba(0,0,0,0.3)]">
+            <span className="text-4xl md:text-5xl font-display font-black text-primary-foreground drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]">
+              {coinName}
+            </span>
+          </div>
+          {/* Shine effect */}
+          <div className="absolute inset-2 rounded-full bg-gradient-to-br from-white/40 via-transparent to-transparent opacity-60 pointer-events-none"></div>
         </div>
       </div>
 
