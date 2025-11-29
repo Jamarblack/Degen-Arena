@@ -10,7 +10,7 @@ const Header = () => {
           <img 
             src={coinLogo} 
             alt="Degen Colosseum Coin" 
-            className="h-12 w-12 md:h-16 md:w-16 object-contain drop-shadow-lg"
+            className="h-12 w-12 md:h-16 md:w-16 rounded-full object-contain drop-shadow-lg"
           />
           <h1 className="text-xl md:text-2xl lg:text-3xl font-display font-black tracking-widest text-primary">
             DEGEN COLOSSEUM
