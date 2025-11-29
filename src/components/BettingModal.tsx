@@ -25,9 +25,9 @@ const BettingModal = ({ isOpen, onClose, onPlaceBet, betType, coinName }: Bettin
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="bg-card border-2 border-primary/50 max-w-md">
+      <DialogContent className="bg-card border-4 border-primary/50 max-w-md shadow-stone texture-stone">
         <DialogHeader>
-          <DialogTitle className="text-2xl md:text-3xl font-display font-black text-center text-gradient-gold uppercase tracking-wider">
+          <DialogTitle className="text-2xl md:text-3xl font-display font-black text-center text-primary uppercase tracking-widest drop-shadow-lg">
             Place Your Wager
           </DialogTitle>
         </DialogHeader>
@@ -35,7 +35,7 @@ const BettingModal = ({ isOpen, onClose, onPlaceBet, betType, coinName }: Bettin
           {betType && coinName && (
             <div className="text-center space-y-2">
               <p className="text-lg font-header font-bold">
-                <span className={betType === "long" ? "text-success" : "text-destructive"}>
+                <span className={betType === "long" ? "text-primary" : "text-destructive"}>
                   {betType === "long" ? "LONG" : "SHORT"}
                 </span>
                 {" on "}
@@ -45,7 +45,7 @@ const BettingModal = ({ isOpen, onClose, onPlaceBet, betType, coinName }: Bettin
           )}
           
           <div className="space-y-2">
-            <Label htmlFor="amount" className="text-sm font-header font-bold uppercase tracking-wider text-muted-foreground">
+            <Label htmlFor="amount" className="text-sm font-header font-bold uppercase tracking-widest text-muted-foreground">
               Amount in SOL
             </Label>
             <Input
@@ -56,7 +56,7 @@ const BettingModal = ({ isOpen, onClose, onPlaceBet, betType, coinName }: Bettin
               placeholder="0.00"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
-              className="h-12 text-lg font-bold text-center bg-background border-border"
+              className="h-12 text-lg font-bold text-center bg-background border-2 border-border shadow-emboss"
             />
           </div>
 
