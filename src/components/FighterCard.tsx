@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { TrendingUp } from "lucide-react"; // Import Icon
 
 interface FighterCardProps {
   title: string;
@@ -8,6 +9,8 @@ interface FighterCardProps {
   change: string;
   isPositive: boolean;
   onBet: () => void;
+  // NEW PROP
+  onViewChart: () => void; 
   buttonLabel: string;
   buttonVariant: "long" | "short";
 }
@@ -19,6 +22,7 @@ const FighterCard = ({
   change,
   isPositive,
   onBet,
+  onViewChart, // Destructure new prop
   buttonLabel,
   buttonVariant,
 }: FighterCardProps) => {
@@ -36,7 +40,7 @@ const FighterCard = ({
           {title}
         </h3>
         <div className="relative h-32 w-32 md:h-40 md:w-40 mx-auto">
-          {/* Outer coin ring - bright bronze/gold */}
+          {/* Outer coin ring */}
           <div className="absolute inset-0 rounded-full bg-gradient-to-br from-primary via-accent to-primary/80 shadow-bronze animate-pulse-slow"></div>
           {/* Inner coin face */}
           <div className="absolute inset-2 rounded-full bg-gradient-to-br from-primary/95 via-accent/90 to-primary/85 border-4 border-primary/30 flex items-center justify-center shadow-[inset_0_4px_8px_rgba(0,0,0,0.3)]">
@@ -57,6 +61,14 @@ const FighterCard = ({
         <div className={`text-lg md:text-xl font-semibold font-sans ${isPositive ? 'text-primary' : 'text-destructive'}`}>
           {change}
         </div>
+        
+        {/* NEW CHART BUTTON */}
+        <button 
+            onClick={onViewChart}
+            className="text-xs text-[#CCA46D] hover:text-white underline decoration-dashed underline-offset-4 flex items-center justify-center gap-1 mx-auto mt-2 transition-colors"
+        >
+            <TrendingUp className="w-3 h-3" /> View Live Chart
+        </button>
       </div>
 
       {/* Bet Button */}
