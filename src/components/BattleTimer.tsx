@@ -20,23 +20,30 @@ const BattleTimer = () => {
   }, []);
 
   const progress = ((timeLeft.minutes * 60 + timeLeft.seconds) / (5 * 60)) * 100;
+  
+  const formatTime = (time: { minutes: number; seconds: number }) => {
+    return `${String(time.minutes).padStart(2, "0")}:${String(time.seconds).padStart(2, "0")}`;
+  };
 
   return (
-    <div className="w-full space-y-2">
-      <div className="flex items-center justify-between text-sm md:text-base">
-        <span className="font-header font-bold uppercase tracking-wider text-muted-foreground">
-          Battle Ends In:
-        </span>
-        <span className="font-header font-bold text-xl md:text-2xl text-primary">
-          {String(timeLeft.minutes).padStart(2, "0")}:{String(timeLeft.seconds).padStart(2, "0")}
-        </span>
+    <div className="w-full max-w-md mx-auto space-y-2">
+      <div className="text-center">
+        <p className="text-xs md:text-sm font-header font-bold text-muted-foreground uppercase tracking-widest">
+          Battle Ends In
+        </p>
       </div>
-      <div className="relative h-4 bg-muted rounded-full overflow-hidden border border-border">
+      <div className="relative h-8 bg-secondary/50 border-2 border-primary/40 overflow-hidden shadow-stone">
+        {/* Progress Bar */}
         <div
-          className="absolute inset-y-0 left-0 bg-gradient-to-r from-destructive to-primary transition-all duration-1000 ease-linear glow-gold"
+          className="absolute inset-y-0 left-0 bg-gradient-to-r from-primary via-primary to-primary/80 transition-all duration-1000 ease-linear shadow-bronze"
           style={{ width: `${progress}%` }}
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-foreground/10 to-transparent animate-pulse-slow" />
+        {/* Timer Text */}
+        <div className="relative h-full flex items-center justify-center">
+          <span className="text-lg md:text-xl font-display font-black text-foreground drop-shadow-lg z-10">
+            {formatTime(timeLeft)}
+          </span>
+        </div>
       </div>
     </div>
   );

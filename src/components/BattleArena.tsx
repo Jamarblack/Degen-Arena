@@ -22,7 +22,7 @@ const BattleArena = () => {
     <div className="w-full max-w-6xl mx-auto px-4 py-6 md:py-10 space-y-6 md:space-y-8">
       {/* Battle Header */}
       <div className="text-center space-y-4">
-        <h2 className="text-3xl md:text-5xl lg:text-6xl font-display font-black uppercase tracking-wider text-gradient-gold">
+        <h2 className="text-3xl md:text-5xl lg:text-6xl font-display font-black uppercase tracking-widest text-primary drop-shadow-lg">
           Current Battle
         </h2>
         <BattleTimer />
@@ -44,9 +44,9 @@ const BattleArena = () => {
 
         {/* VS Badge */}
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 hidden md:block">
-          <div className="relative">
-            <Shield className="h-20 w-20 text-primary animate-pulse-slow glow-gold" />
-            <span className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-2xl font-display font-black text-primary-foreground">
+          <div className="relative bg-card border-4 border-primary rounded-full p-6 shadow-bronze">
+            <Shield className="h-20 w-20 text-primary" />
+            <span className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-2xl font-display font-black text-primary">
               VS
             </span>
           </div>
@@ -54,9 +54,9 @@ const BattleArena = () => {
 
         {/* Mobile VS Badge */}
         <div className="flex justify-center items-center md:hidden">
-          <div className="relative">
-            <Shield className="h-16 w-16 text-primary animate-pulse-slow glow-gold" />
-            <span className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-xl font-display font-black text-primary-foreground">
+          <div className="relative bg-card border-4 border-primary rounded-full p-4 shadow-bronze">
+            <Shield className="h-16 w-16 text-primary" />
+            <span className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-xl font-display font-black text-primary">
               VS
             </span>
           </div>
