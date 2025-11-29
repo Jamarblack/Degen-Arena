@@ -8,7 +8,7 @@ const Index = () => {
       <Header />
       <main className="flex-1 flex flex-col">
         <BattleArena />
-        <HallOfFame />
+        
       </main>
     </div>
   );
