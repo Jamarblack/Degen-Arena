@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { TrendingUp } from "lucide-react"; // Import Icon
+import { TrendingUp } from "lucide-react"; 
 
 interface FighterCardProps {
   title: string;
@@ -22,7 +22,7 @@ const FighterCard = ({
   change,
   isPositive,
   onBet,
-  onViewChart, // Destructure new prop
+  onViewChart, 
   buttonLabel,
   buttonVariant,
 }: FighterCardProps) => {
@@ -62,7 +62,6 @@ const FighterCard = ({
           {change}
         </div>
         
-        {/* NEW CHART BUTTON */}
         <button 
             onClick={onViewChart}
             className="text-xs text-[#CCA46D] hover:text-white underline decoration-dashed underline-offset-4 flex items-center justify-center gap-1 mx-auto mt-2 transition-colors"

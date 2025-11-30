@@ -7,7 +7,7 @@ import MyPositions from "./MyPositions";
 import ChartModal from "./ChartModal";   
 import MessageModal from "./MessageModal"; // NEW IMPORT
 import { Shield, RefreshCw } from "lucide-react";
-import { fetchTokenPrices, TokenData } from '@/lib/priceService';
+import { fetchTokenPrices, TokenData } from '@/lib/PriceService';
 
 // Supabase Import
 import { supabase } from "@/lib/supabase";
@@ -150,8 +150,8 @@ const BattleArena = () => {
         <h2 className="text-3xl md:text-5xl lg:text-6xl font-display font-black uppercase tracking-widest text-primary drop-shadow-lg">
           Current Battle
         </h2>
-        <button onClick={refreshBattle} className="absolute right-0 top-2 text-[#4A3F35] hover:text-[#CCA46D] transition-colors">
-            <RefreshCw className={`w-6 h-6 ${loading ? 'animate-spin' : ''}`} />
+        <button onClick={refreshBattle} className="absolute right-0 top-2 text-[#110e0c] hover:text-[#CCA46D] transition-colors justify-between">
+            <RefreshCw className={`w-6 h-6 ${loading ? 'animate-spin' : ''}`} /> <span className="">Refresh Prices</span>
         </button>
         <BattleTimer />
       </div>
@@ -166,7 +166,7 @@ const BattleArena = () => {
           isPositive={!loading && (prices?.left.priceChange || 0) > 0}
           onBet={() => handleBet("long", prices?.left.symbol || "Left")}
           onViewChart={() => prices?.left && openChart(prices.left)} 
-          buttonLabel="Long (Gladiator Wins)"
+          buttonLabel="Bet"
           buttonVariant="long"
         />
 
@@ -194,7 +194,7 @@ const BattleArena = () => {
           isPositive={!loading && (prices?.right.priceChange || 0) > 0}
           onBet={() => handleBet("short", prices?.right.symbol || "Right")}
           onViewChart={() => prices?.right && openChart(prices.right)} 
-          buttonLabel="Short (Gladiator Falls)"
+          buttonLabel="Bet"
           buttonVariant="short"
         />
       </div>
