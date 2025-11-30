@@ -1,7 +1,10 @@
 require('dotenv').config();
 const { Connection, Keypair, PublicKey, SystemProgram, Transaction, sendAndConfirmTransaction, LAMPORTS_PER_SOL } = require('@solana/web3.js');
 const { createClient } = require('@supabase/supabase-js');
-const bs58 = require('bs58'); // Works perfectly with v4.0.1
+const bs58 = require('bs58'); 
+
+// Robust decoder handling both versions of bs58
+const decode = bs58.decode || (bs58.default ? bs58.default.decode : null) || ((str) => new Uint8Array(bs58.default(str)));
 
 // --- CONFIGURATION ---
 const BET_DURATION_MINUTES = 2; 
@@ -13,25 +16,37 @@ const connection = new Connection(RPC_URL, 'confirmed');
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
 
 // Load House Wallet
-const secretKeyString = process.env.HOUSE_PRIVATE_KEY;
+let secretKeyString = process.env.HOUSE_PRIVATE_KEY;
+
 if (!secretKeyString) {
     console.error("❌ ERROR: HOUSE_PRIVATE_KEY not found in .env");
     process.exit(1);
 }
 
-try {
-    // Simple decoding for bs58@4.0.1
-    const secretKey = bs58.decode(secretKeyString);
-    const houseWallet = Keypair.fromSecretKey(secretKey);
+// Clean up the string (remove brackets/spaces if user pasted them)
+secretKeyString = secretKeyString.replace(/[\[\]\s]/g, '');
 
-    // Make houseWallet global so functions can see it
+let houseWallet;
+try {
+    let secretKey;
+    if (secretKeyString.includes(',')) {
+        // CASE 1: It's a Number Array (e.g., "206,45,248...")
+        const array = secretKeyString.split(',').map(num => parseInt(num.trim(), 10));
+        secretKey = Uint8Array.from(array);
+    } else {
+        // CASE 2: It's a Base58 String (e.g., "5MgpQ...")
+        secretKey = decode(secretKeyString);
+    }
+
+    houseWallet = Keypair.fromSecretKey(secretKey);
     global.houseWallet = houseWallet;
 
     console.log("🤖 Referee Bot Online!");
     console.log("Listening for bets on wallet:", houseWallet.publicKey.toString());
 
 } catch (err) {
-    console.error("❌ Key Error:", err.message);
+    console.error("❌ Wallet Key Error:", err.message);
+    console.log("Your Private Key format is invalid. Please check .env");
     process.exit(1);
 }
 
@@ -61,11 +76,11 @@ async function getCurrentPrice(coinSymbol) {
 
         const response = await fetch(`https://api.dexscreener.com/latest/dex/tokens/${address}`);
         const data = await response.json();
+        const pair = data.pairs?.find(p => p.quoteToken.symbol === 'SOL') || data.pairs?.[0];
         
-        const pair = data.pairs?.find(p => p.quoteToken.symbol === 'SOL');
-        return pair ? parseFloat(pair.priceUsd) : (data.pairs?.[0]?.priceUsd ? parseFloat(data.pairs[0].priceUsd) : null);
+        return pair ? parseFloat(pair.priceUsd) : null;
     } catch (e) {
-        console.error("Price fetch error:", e);
+        console.error("Price fetch error:", e.message);
         return null;
     }
 }
@@ -89,7 +104,7 @@ async function sendPayout(userAddress, amount) {
         console.log(`💸 Payout sent! Tx: ${signature}`);
         return signature;
     } catch (e) {
-        console.error("Payout failed:", e);
+        console.error("Payout failed:", e.message);
         return null;
     }
 }
@@ -116,7 +131,7 @@ async function checkBets() {
 
             const currentPrice = await getCurrentPrice(bet.coin_symbol);
             if (!currentPrice) {
-                console.log(`Could not fetch price for ${bet.coin_symbol}, skipping...`);
+                console.log(`Skipping ${bet.coin_symbol} (No Price)`);
                 continue;
             }
 
@@ -124,7 +139,7 @@ async function checkBets() {
             if (bet.bet_type === 'long' && currentPrice > bet.entry_price) won = true;
             else if (bet.bet_type === 'short' && currentPrice < bet.entry_price) won = true;
 
-            console.log(`Entry: ${bet.entry_price}, Current: ${currentPrice} -> ${won ? "WIN" : "LOSS"}`);
+            console.log(`Entry: ${bet.entry_price} | Current: ${currentPrice} -> ${won ? "WIN" : "LOSS"}`);
 
             if (won) {
                 const payoutAmount = bet.amount * PAYOUT_MULTIPLIER;

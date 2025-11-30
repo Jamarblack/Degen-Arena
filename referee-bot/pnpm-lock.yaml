@@ -15,7 +15,7 @@ importers:
         specifier: ^2.86.0
         version: 2.86.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       bs58:
-        specifier: ^4.0.1
+        specifier: 4.0.1
         version: 4.0.1
       dotenv:
         specifier: ^17.2.3
