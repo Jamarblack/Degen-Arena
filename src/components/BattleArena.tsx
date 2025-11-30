@@ -151,7 +151,7 @@ const BattleArena = () => {
           Current Battle
         </h2>
         <button onClick={refreshBattle} className="absolute right-0 top-2 text-[#110e0c] hover:text-[#CCA46D] transition-colors justify-between">
-            <RefreshCw className={`w-6 h-6 ${loading ? 'animate-spin' : ''}`} /> <span className="">Refresh Prices</span>
+            <RefreshCw className={`w-6 h-6 ${loading ? 'animate-spin' : ''}`} /> <span className="">Refresh</span>
         </button>
         <BattleTimer />
       </div>
