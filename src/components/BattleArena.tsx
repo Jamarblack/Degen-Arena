@@ -5,9 +5,10 @@ import BettingModal from "./BettingModal";
 import HallOfFame from "./Transactions"; 
 import MyPositions from "./MyPositions"; 
 import ChartModal from "./ChartModal";   
-import MessageModal from "./MessageModal"; // NEW IMPORT
+import MessageModal from "./MessageModal"; 
 import { Shield, RefreshCw } from "lucide-react";
-import { fetchTokenPrices, TokenData } from '@/lib/PriceService';
+import { fetchTokenPrices, TokenData } from '@/lib/priceService';
+import { useGameSounds } from "@/hooks/useGameSounds"; 
 
 // Supabase Import
 import { supabase } from "@/lib/supabase";
@@ -25,7 +26,7 @@ const BattleArena = () => {
   const [isChartOpen, setIsChartOpen] = useState(false);
   const [selectedChartCoin, setSelectedChartCoin] = useState<{name: string, address: string} | null>(null);
   
-  // NEW: Message Modal State
+  // Message Modal State
   const [messageConfig, setMessageConfig] = useState<{
       isOpen: boolean;
       title: string;
@@ -37,10 +38,12 @@ const BattleArena = () => {
 
   const { connection } = useConnection();
   const { publicKey, sendTransaction } = useWallet();
+  const { play } = useGameSounds(); // Sound Hook
 
   const HOUSE_WALLET = new PublicKey("8RYRucwwCsrX7VaeXLTR8FoHUi9P26Ywu4j22G5zq1aR"); 
 
   const refreshBattle = async () => {
+    play('refresh'); 
     setLoading(true);
     const data = await fetchTokenPrices();
     if (data) setPrices(data);
@@ -56,6 +59,7 @@ const BattleArena = () => {
   const [selectedBet, setSelectedBet] = useState<{ type: "long" | "short"; coin: string } | null>(null);
 
   const handleBet = (type: "long" | "short", coin: string) => {
+    play('select'); 
     setSelectedBet({ type, coin });
     setIsBettingModalOpen(true);
   };
@@ -65,7 +69,6 @@ const BattleArena = () => {
       setIsChartOpen(true);
   };
 
-  // Helper to show custom modal
   const showMessage = (title: string, message: string, type: "success" | "error" | "info", onConfirm?: () => void, confirmText?: string) => {
       setMessageConfig({ isOpen: true, title, message, type, onConfirm, confirmText });
   };
@@ -77,15 +80,17 @@ const BattleArena = () => {
   };
 
   const handlePlaceBet = async (amount: string) => {
+    // 1. Error: No Wallet Connected
     if (!publicKey) {
-      showMessage("Wallet Required", "Please connect your Solana wallet to enter the arena.", "error");
+      play('bet_fail'); // <--- SFX: Error
+      showMessage("Wallet Required", "Please connect your Phantom wallet to enter the arena.", "error");
       return;
     }
 
     try {
       console.log(`Initiating bet: ${amount} SOL`);
 
-      // 1. Blockchain Transaction
+      // Blockchain Transaction
       const transaction = new Transaction().add(
         SystemProgram.transfer({
           fromPubkey: publicKey,
@@ -97,7 +102,7 @@ const BattleArena = () => {
       const signature = await sendTransaction(transaction, connection);
       console.log("Transaction sent:", signature);
       
-      // 2. Save to Supabase
+      // Save to Supabase
       const currentPrice = selectedBet?.coin === prices?.left.symbol ? prices?.left.price : prices?.right.price;
       const entryPrice = parseFloat((currentPrice || "0").replace('$', ''));
 
@@ -113,16 +118,16 @@ const BattleArena = () => {
 
       if (dbError) console.error("Supabase Error:", dbError);
 
+      play('bet_success'); // <--- SFX: Success
       setIsBettingModalOpen(false);
       
-      // 3. SHOW SUCCESS MODAL (Replaces confirm())
+      // Show Success Modal
       setTimeout(() => {
           showMessage(
               "Victory Awaits!", 
               `Your wager has been placed successfully.\n\nTransaction: ${signature.slice(0, 6)}...`, 
               "success",
               () => {
-                  // This runs if they click "Share Victory"
                   shareOnTwitter(amount, selectedBet?.coin || "Crypto", selectedBet?.type || "up");
                   setMessageConfig(prev => ({ ...prev, isOpen: false }));
               },
@@ -132,7 +137,7 @@ const BattleArena = () => {
 
     } catch (error) {
       console.error("Bet failed:", error);
-      // Show Error Modal
+      play('bet_fail'); // <--- SFX: Error (User rejected or tx failed)
       showMessage("Transaction Failed", "The blockchain rejected your offering. Please try again.", "error");
     }
   };
@@ -150,8 +155,8 @@ const BattleArena = () => {
         <h2 className="text-3xl md:text-5xl lg:text-6xl font-display font-black uppercase tracking-widest text-primary drop-shadow-lg">
           Current Battle
         </h2>
-        <button onClick={refreshBattle} className="absolute right-0 top-2 text-[#110e0c] hover:text-[#CCA46D] transition-colors justify-between">
-            <RefreshCw className={`w-6 h-6 ${loading ? 'animate-spin' : ''}`} /> <span className="">Refresh</span>
+        <button onClick={refreshBattle} className="absolute right-0 top-2 text-[#13100e] hover:text-[#CCA46D] transition-colors">
+            <RefreshCw className={`w-6 h-6 ${loading ? 'animate-spin' : ''}`} /><span className="">Refresh Battle</span>
         </button>
         <BattleTimer />
       </div>
@@ -166,7 +171,7 @@ const BattleArena = () => {
           isPositive={!loading && (prices?.left.priceChange || 0) > 0}
           onBet={() => handleBet("long", prices?.left.symbol || "Left")}
           onViewChart={() => prices?.left && openChart(prices.left)} 
-          buttonLabel="Bet"
+          buttonLabel="Long (Gladiator Wins)"
           buttonVariant="long"
         />
 
@@ -194,7 +199,7 @@ const BattleArena = () => {
           isPositive={!loading && (prices?.right.priceChange || 0) > 0}
           onBet={() => handleBet("short", prices?.right.symbol || "Right")}
           onViewChart={() => prices?.right && openChart(prices.right)} 
-          buttonLabel="Bet"
+          buttonLabel="Short (Gladiator Falls)"
           buttonVariant="short"
         />
       </div>
@@ -202,7 +207,6 @@ const BattleArena = () => {
       <MyPositions prices={prices} />
       <HallOfFame />
 
-      {/* Betting Modal */}
       <BettingModal
         isOpen={isBettingModalOpen}
         onClose={() => setIsBettingModalOpen(false)}
@@ -211,7 +215,6 @@ const BattleArena = () => {
         coinName={selectedBet?.coin}
       />
 
-      {/* Chart Modal */}
       {selectedChartCoin && (
           <ChartModal 
             isOpen={isChartOpen} 
@@ -221,7 +224,6 @@ const BattleArena = () => {
           />
       )}
 
-      {/* NEW: Message Modal (Replaces Alerts) */}
       <MessageModal
         isOpen={messageConfig.isOpen}
         onClose={() => setMessageConfig(prev => ({ ...prev, isOpen: false }))}
