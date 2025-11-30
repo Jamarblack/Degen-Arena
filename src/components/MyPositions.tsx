@@ -1,6 +1,6 @@
 import { Card } from "@/components/ui/card";
 import { useEffect, useState } from "react";
-import { TokenData } from "@/lib/priceService";
+import { TokenData } from "@/lib/PriceService";
 import { TrendingUp, TrendingDown, Wallet, Clock } from "lucide-react";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { supabase } from "@/lib/supabase";

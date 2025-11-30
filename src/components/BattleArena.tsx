@@ -7,7 +7,7 @@ import MyPositions from "./MyPositions";
 import ChartModal from "./ChartModal";   
 import MessageModal from "./MessageModal"; 
 import { Shield, RefreshCw } from "lucide-react";
-import { fetchTokenPrices, TokenData } from '@/lib/priceService';
+import { fetchTokenPrices, TokenData } from '@/lib/PriceService';
 import { useGameSounds } from "@/hooks/useGameSounds"; 
 
 // Supabase Import
