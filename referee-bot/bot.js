@@ -30,7 +30,6 @@ let houseWallet;
 try {
     let secretKey;
     if (secretKeyString.includes(',')) {
-        // CASE 1: It's a Number Array (e.g., "206,45,248...")
         const array = secretKeyString.split(',').map(num => {
             const val = parseInt(num.trim(), 10);
             if (isNaN(val)) throw new Error("Invalid number in key array");
@@ -38,7 +37,6 @@ try {
         });
         secretKey = Uint8Array.from(array);
     } else {
-        // CASE 2: It's a Base58 String (e.g., "5MgpQ...")
         secretKey = decode(secretKeyString);
     }
 
@@ -50,13 +48,13 @@ try {
 
 } catch (err) {
     console.error("❌ Wallet Key Error:", err.message);
-    console.log("Your Private Key format is invalid. Please check .env");
     process.exit(1);
 }
 
 // Helper: Fetch Price from DexScreener
 async function getCurrentPrice(coinSymbol) {
     try {
+        // --- EXPANDED ADDRESS MAP ---
         const ADDRESS_MAP = {
             'BONK': 'DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263',
             'WIF': 'EKpQGSJtjMFqKZ9KQanSqYXRcF8fBopzLHYxdM65zcjm',
@@ -80,14 +78,17 @@ async function getCurrentPrice(coinSymbol) {
             'GIGACHAD': '63LfDmNb3MQ8mw9MtZ2To9bEA2M71kZUUGq5tiJxcqj9'
         };
 
-        const address = ADDRESS_MAP[coinSymbol.toUpperCase()];
+        const cleanSymbol = coinSymbol.toUpperCase().replace('$', '');
+        const address = ADDRESS_MAP[cleanSymbol];
+        
         if (!address) {
-            console.log(`⚠️ Unknown coin: ${coinSymbol}`);
+            console.log(`⚠️ Unknown coin: ${cleanSymbol}`);
             return null;
         }
 
         const response = await fetch(`https://api.dexscreener.com/latest/dex/tokens/${address}`);
         const data = await response.json();
+        
         const pair = data.pairs?.find(p => p.quoteToken.symbol === 'SOL') || data.pairs?.[0];
         
         return pair ? parseFloat(pair.priceUsd) : null;
@@ -130,7 +131,12 @@ async function checkBets() {
         .select('*')
         .eq('status', 'open');
 
-    if (error || !bets) return;
+    if (error) {
+        console.error("Supabase Error:", error.message);
+        return;
+    }
+    
+    if (!bets || bets.length === 0) return;
 
     const now = Date.now();
 
@@ -143,7 +149,7 @@ async function checkBets() {
 
             const currentPrice = await getCurrentPrice(bet.coin_symbol);
             if (!currentPrice) {
-                console.log(`Skipping ${bet.coin_symbol} (No Price)`);
+                console.log(`Could not fetch price for ${bet.coin_symbol}, skipping...`);
                 continue;
             }
 
