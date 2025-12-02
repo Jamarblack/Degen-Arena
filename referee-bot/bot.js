@@ -7,7 +7,7 @@ const bs58 = require('bs58');
 const decode = bs58.decode || (bs58.default ? bs58.default.decode : null) || ((str) => new Uint8Array(bs58.default(str)));
 
 // --- CONFIGURATION ---
-const BET_DURATION_MINUTES = 2; 
+const BET_DURATION_MINUTES = 5; 
 const PAYOUT_MULTIPLIER = 1.9; 
 const RPC_URL = "https://api.devnet.solana.com"; 
 // ---------------------
@@ -31,7 +31,11 @@ try {
     let secretKey;
     if (secretKeyString.includes(',')) {
         // CASE 1: It's a Number Array (e.g., "206,45,248...")
-        const array = secretKeyString.split(',').map(num => parseInt(num.trim(), 10));
+        const array = secretKeyString.split(',').map(num => {
+            const val = parseInt(num.trim(), 10);
+            if (isNaN(val)) throw new Error("Invalid number in key array");
+            return val;
+        });
         secretKey = Uint8Array.from(array);
     } else {
         // CASE 2: It's a Base58 String (e.g., "5MgpQ...")
@@ -65,7 +69,15 @@ async function getCurrentPrice(coinSymbol) {
             'FARTCOIN': '9BB6NFEBSJbQdxqze4psJq7jyCFhtKbYEGqAmWi1pump',
             'MOODENG': 'ED5nyyWEzpPPiWimP8vYm7sD7TD3LAt3Q3gRTWHzPJBY',
             'MYRO': 'HhJpBhRRn4g56VsyLuT8DL5Bv31HkXqsrahTTUCZeZg4',
-            'JUP': 'JUPyiwrYJFskUPiHa7hkeR8VUtAeFoSYbKedZNsDvCN'
+            'JUP': 'JUPyiwrYJFskUPiHa7hkeR8VUtAeFoSYbKedZNsDvCN',
+            'SLERF': '7BgBvyjr2HDURj8nddpGTLJ0pmzVf1f1k3tgEAg1pump',
+            'WEN': 'WENWENvqqNya429ubCdR81ZmD69brwQaaBYY6p3LCpk',
+            'MANEKI': '25hAyBQfoDhfWx9ay6rarbgvWGwDdNqcHsXS3jQ3mUAj',
+            'MICHI': '5mbK36SZ7J19An8jFco7R446d8Wq4t4q2vWqK16pump',
+            'BILLY': '3B5wuUrMEi5y1D8BAu2e71rUUGxxTmgk7c06VvRjJ7m7',
+            'MOTHER': '3S8qX1MsMqRqeW4govDEWQKz4zwoTncWuQK60G37pump',
+            'PONKE': '5z3EqYQo9HiCEs3R84RCDMy256X9lFcwZh279qksfthp',
+            'GIGACHAD': '63LfDmNb3MQ8mw9MtZ2To9bEA2M71kZUUGq5tiJxcqj9'
         };
 
         const address = ADDRESS_MAP[coinSymbol.toUpperCase()];
