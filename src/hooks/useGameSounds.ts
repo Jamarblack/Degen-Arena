@@ -6,8 +6,9 @@ const SOUNDS = {
   bet_success: "/sounds/betSuccessful.mp3", // Success/Coins sound
   bet_fail: "/sounds/error.mp3",        // Error sound
   refresh: "/sounds/refresh.mp3",       // Refresh sound
-  // You can map 'win' to betSuccessful as well, or add a specific one later
-  win: "/sounds/betSuccessful.mp3", 
+  win: "/sounds/betSuccessful.mp3",
+  enter: "/sounds/enter.mp3",  // Renamed to .mp3 for audio standard
+  ready: "/sounds/ready.mp3",  
 };
 
 export const useGameSounds = () => {
