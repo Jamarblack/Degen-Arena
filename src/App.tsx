@@ -23,7 +23,7 @@ const App = () => {
     <QueryClientProvider client={queryClient}>
       <WalletContextProvider>
         <TooltipProvider>
-          <div className="min-h-screen font-sans no-scrollbar no-scrollbar::-webkit-scrollbar text-foreground">
+          <div className="font-sans  text-foreground">
             
             {/* 1. COVER PAGE */}
             {gameState === "COVER" && (

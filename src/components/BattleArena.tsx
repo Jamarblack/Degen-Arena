@@ -190,8 +190,8 @@ const BattleArena = () => {
             <h2 className="text-3xl md:text-5xl lg:text-6xl font-display font-black uppercase tracking-widest text-primary drop-shadow-lg">
               Current Battle
             </h2>
-            <button onClick={refreshBattle} className="relative right-0 top-2 text-[#130f0c] hover:text-[#CCA46D] transition-colors">
-                <RefreshCw className={`w-6 h-6 ${loading ? 'animate-spin' : ''}`} /><span className="">Refresh Battle</span>
+            <button onClick={refreshBattle} className="relative flex justify-center p-2 items-center border-2 bg-primary hover:bg-[#130f0c] right-0 top-2 text-[#130f0c] hover:text-[#CCA46D] transition-colors">
+                <RefreshCw className={`w-6 h-6 ${loading ? 'animate-spin' : ''}`} /><span className="text-l font-bold">REFRESH BATTLE</span>
             </button>
             <BattleTimer />
           </div>

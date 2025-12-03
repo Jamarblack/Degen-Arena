@@ -119,6 +119,7 @@ All colors MUST be HSL.
     background-attachment: fixed;
     min-height: 100vh;
     position: relative;
+    background-color: black;
   }
   
   body::before {
@@ -216,3 +217,4 @@ All colors MUST be HSL.
 .wallet-adapter-button:not([disabled]):hover {
   background-color: transparent !important; 
 }
+

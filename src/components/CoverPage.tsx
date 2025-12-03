@@ -17,7 +17,7 @@ const CoverPage = ({ onEnter }: CoverPageProps) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-[#0c0a09] flex flex-col items-center justify-center text-center sm:px-4 overflow-hidden">
+    <div className="fixed inset-0 z-50 bg-[#0c0a09] flex flex-col  items-center justify-center text-center sm:px-4 overflow-hidden">
       
       {/* Background Elements */}
       <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-10 pointer-events-none"></div>
