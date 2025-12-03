@@ -7,7 +7,7 @@ import { WalletContextProvider } from "@/context/WalletContextProvider";
 
 // Components
 import CoverPage from "@/components/CoverPage";
-import LandingPage from "@/components/landingPage";
+import LandingPage from "@/components/LandingPage";
 import BattleArena from "@/components/BattleArena";
 import Header from "@/components/Header"; // Assuming you have a Header component
 
