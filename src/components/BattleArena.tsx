@@ -169,12 +169,12 @@ const BattleArena = () => {
         <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={() => setIsMobileChatOpen(false)} />
         
         {/* Drawer Content */}
-        <div className={`absolute left-0 top-0 bottom-0 w-[85vw] max-w-[350px] bg-[#1c1917] border-r-2 border-[#4A3F35] shadow-2xl transform transition-transform duration-300 ${isMobileChatOpen ? 'translate-x-0' : '-translate-x-full'}`}>
-            <div className="flex justify-end p-2 bg-[#0c0a09]">
+        <div className={`absolute left-0 top-0 bottom-0 w-[85vw] max-w-[350px]  bg-[#1c1917] border-r-2 border-[#4A3F35] shadow-2xl transform transition-transform duration-300 ${isMobileChatOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+            {/* <div className="flex justify-end p-2 bg-[#0c0a09]">
                 <button onClick={() => setIsMobileChatOpen(false)} className="text-[#CCA46D] p-1">
                     <X className="w-6 h-6" />
                 </button>
-            </div>
+            </div> */}
             <div className="h-[calc(100%-44px)]">
                 <Trollbox />
             </div>
@@ -190,7 +190,7 @@ const BattleArena = () => {
             <h2 className="text-3xl md:text-5xl lg:text-6xl font-display font-black uppercase tracking-widest text-primary drop-shadow-lg">
               Current Battle
             </h2>
-            <button onClick={refreshBattle} className="absolute right-0 top-2 text-[#130f0c] hover:text-[#CCA46D] transition-colors">
+            <button onClick={refreshBattle} className="relative right-0 top-2 text-[#130f0c] hover:text-[#CCA46D] transition-colors">
                 <RefreshCw className={`w-6 h-6 ${loading ? 'animate-spin' : ''}`} /><span className="">Refresh Battle</span>
             </button>
             <BattleTimer />

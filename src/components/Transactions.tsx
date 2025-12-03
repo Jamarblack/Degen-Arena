@@ -14,7 +14,7 @@ interface BattleLog {
 }
 
 const HallOfFame = () => {
-    // USE THE SHARED DEVNET CONNECTION
+    
     const { connection } = useConnection(); 
     
     const [logs, setLogs] = useState<BattleLog[]>([]);
@@ -97,7 +97,7 @@ const HallOfFame = () => {
                                         </div>
                                     </div>
                                 </div>
-                                <a href={`https://solscan.io/tx/${log.signature}?cluster=devnet`} target="_blank" rel="noreferrer" className="flex items-center gap-1 text-[#CCA46D] hover:text-white text-xs md:text-sm font-bold transition-colors">
+                                <a href={`https://solscan.io/tx/${log.signature}?cluster=mainnet`} target="_blank" rel="noreferrer" className="flex items-center gap-1 text-[#CCA46D] hover:text-white text-xs md:text-sm font-bold transition-colors">
                                     VERIFY <ExternalLink className="w-3 h-3" />
                                 </a>
                             </div>

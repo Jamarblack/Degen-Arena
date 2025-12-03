@@ -182,6 +182,14 @@ All colors MUST be HSL.
   .animate-pulse-slow {
     animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   }
+
+  .no-scrollbar::-webkit-scrollbar {
+      display: none;
+  }
+  .no-scrollbar {
+      -ms-overflow-style: none; 
+      scrollbar-width: none; 
+  }
   
   @keyframes pulse {
     0%, 100% {
@@ -202,4 +210,3 @@ All colors MUST be HSL.
 .wallet-adapter-button:not([disabled]):hover {
   background-color: transparent !important; 
 }
-

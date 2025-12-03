@@ -4,7 +4,7 @@ import HallOfFame from "@/components/HallOfFame";
 
 const Index = () => {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen no-scrollbar flex flex-col">
       <Header />
       <main className="flex-1 flex flex-col">
         <BattleArena />

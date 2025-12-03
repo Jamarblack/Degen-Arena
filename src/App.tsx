@@ -7,7 +7,7 @@ import { WalletContextProvider } from "@/context/WalletContextProvider";
 
 // Components
 import CoverPage from "@/components/CoverPage";
-import LandingPage from "@/components/LandingPage";
+import LandingPage from "@/components/landingPage";
 import BattleArena from "@/components/BattleArena";
 import Header from "@/components/Header"; // Assuming you have a Header component
 
@@ -23,7 +23,7 @@ const App = () => {
     <QueryClientProvider client={queryClient}>
       <WalletContextProvider>
         <TooltipProvider>
-          <div className="min-h-screen font-sans text-foreground">
+          <div className="min-h-screen font-sans no-scrollbar no-scrollbar::-webkit-scrollbar text-foreground">
             
             {/* 1. COVER PAGE */}
             {gameState === "COVER" && (
