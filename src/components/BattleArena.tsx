@@ -85,7 +85,7 @@ const BattleArena = () => {
   const handlePlaceBet = async (amount: string) => {
     if (!publicKey) {
       play('bet_fail'); 
-      showMessage("Wallet Required", "Please connect your Phantom wallet to enter the arena.", "error");
+      showMessage("Wallet Required", "Please connect your Solana wallet to enter the arena.", "error");
       return;
     }
 
