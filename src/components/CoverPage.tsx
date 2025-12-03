@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Shield, Swords } from "lucide-react";
 import coinLogo from "@/assets/coin-logo.png"; // Make sure this path is correct for your logo
 import { useGameSounds } from "@/hooks/useGameSounds";
+import solana from "@/assets/SolLogo.svg"
 
 interface CoverPageProps {
   onEnter: () => void;
@@ -16,7 +17,7 @@ const CoverPage = ({ onEnter }: CoverPageProps) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-[#0c0a09] flex flex-col items-center justify-center text-center px-4 overflow-hidden">
+    <div className="fixed inset-0 z-50 bg-[#0c0a09] flex flex-col items-center justify-center text-center sm:px-4 overflow-hidden">
       
       {/* Background Elements */}
       <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-10 pointer-events-none"></div>
@@ -36,13 +37,13 @@ const CoverPage = ({ onEnter }: CoverPageProps) => {
         </div>
 
         <div className="space-y-4">
-          <h1 className="text-5xl md:text-7xl font-display font-black text-[#fbbf24] tracking-widest uppercase drop-shadow-[0_0_15px_rgba(251,191,36,0.5)]">
+          <h1 className="text-4xl md:text-7xl font-display font-black text-[#fbbf24] tracking-widest uppercase drop-shadow-[0_0_15px_rgba(251,191,36,0.5)]">
             Degen<br/>Colosseum
           </h1>
           <p className="text-stone-400 text-lg md:text-xl font-mono max-w-xl mx-auto">
             The Ultimate PvP Prediction Market on Solana.
             <br/>
-            <span className="text-[#fbbf24]/80 text-sm">Fortune Favors the Bold.</span>
+            <span className="text-primary text-sm">Fortune Favors the Bold.</span>
           </p>
         </div>
 
@@ -60,7 +61,7 @@ const CoverPage = ({ onEnter }: CoverPageProps) => {
       </div>
 
       <div className="absolute bottom-8 text-stone-600 text-xs font-mono">
-        Built for the Indie.fun Hackathon • Powered by Solana
+        Built for the Indie.fun Hackathon • Powered by Solana <img src={solana} alt="Solana Logo" className="inline w-4 lg:h-4  ml-1" />
       </div>
     </div>
   );
