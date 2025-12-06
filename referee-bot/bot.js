@@ -8,8 +8,8 @@ const decode = bs58.decode || (bs58.default ? bs58.default.decode : null) || ((s
 
 // --- CONFIGURATION ---
 const BET_DURATION_MINUTES = 5; 
-const PAYOUT_MULTIPLIER = 1.9; 
-const RPC_URL = "https://api.mainnet-beta.solana.com"; 
+const PAYOUT_MULTIPLIER = 0.9; 
+const RPC_URL = "https://young-little-breeze.solana-mainnet.quiknode.pro/5331211f2de8c4faaaf53fbee387cec545065bfb/";
 // ---------------------
 
 const connection = new Connection(RPC_URL, 'confirmed');
