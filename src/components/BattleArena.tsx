@@ -19,6 +19,7 @@ import { supabase } from "@/lib/supabase";
 import { useConnection, useWallet } from '@solana/wallet-adapter-react';
 import { LAMPORTS_PER_SOL, PublicKey, SystemProgram, Transaction } from '@solana/web3.js';
 
+//my scripts
 const BattleArena = () => {
   const [prices, setPrices] = useState<{ left: TokenData, right: TokenData } | null>(null);
   const [loading, setLoading] = useState(true);
