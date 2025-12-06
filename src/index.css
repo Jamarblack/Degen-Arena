@@ -1,0 +1,220 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    --background: 35 20% 28%;
+    --foreground: 48 35% 92%;
+
+    --card: 35 15% 22%;
+    --card-foreground: 48 35% 92%;
+
+    --popover: 35 18% 26%;
+    --popover-foreground: 48 35% 92%;
+
+    --primary: 35 50% 65%;
+    --primary-foreground: 30 20% 15%;
+
+    --secondary: 30 18% 32%;
+    --secondary-foreground: 48 35% 92%;
+
+    --muted: 30 15% 35%;
+    --muted-foreground: 35 25% 65%;
+
+    --accent: 35 50% 65%;
+    --accent-foreground: 30 20% 15%;
+
+    --success: 35 45% 60%;
+    --success-foreground: 30 20% 15%;
+
+    --destructive: 25 30% 45%;
+    --destructive-foreground: 48 35% 92%;
+
+    --border: 30 20% 40%;
+    --input: 30 18% 30%;
+    --ring: 35 50% 65%;
+
+    --radius: 0.25rem;
+
+    --gradient-stone: linear-gradient(135deg, hsl(35 20% 28%) 0%, hsl(35 22% 32%) 50%, hsl(30 20% 30%) 100%);
+    --gradient-bronze: linear-gradient(135deg, hsl(35 50% 60%) 0%, hsl(35 45% 70%) 100%);
+    --gradient-patina: linear-gradient(135deg, hsl(30 22% 35%) 0%, hsl(25 20% 38%) 100%);
+    
+    --shadow-bronze: 0 4px 12px hsl(30 20% 10% / 0.5), inset 0 1px 0 hsl(35 45% 70% / 0.3);
+    --shadow-stone: 0 4px 8px hsl(30 20% 10% / 0.6), inset 0 2px 4px hsl(30 20% 10% / 0.4);
+    --shadow-emboss: inset 0 2px 4px hsl(30 20% 10% / 0.5), inset 0 -1px 2px hsl(35 30% 50% / 0.2);
+    
+    --sidebar-background: 30 12% 18%;
+    --sidebar-foreground: 48 35% 92%;
+    --sidebar-primary: 35 35% 60%;
+    --sidebar-primary-foreground: 30 20% 15%;
+    --sidebar-accent: 30 18% 25%;
+    --sidebar-accent-foreground: 48 35% 92%;
+    --sidebar-border: 30 20% 35%;
+    --sidebar-ring: 35 35% 60%;
+  }
+
+  .dark {
+    --background: 35 20% 28%;
+    --foreground: 48 35% 92%;
+
+    --card: 35 15% 22%;
+    --card-foreground: 48 35% 92%;
+
+    --popover: 35 18% 26%;
+    --popover-foreground: 48 35% 92%;
+
+    --primary: 35 50% 65%;
+    --primary-foreground: 30 20% 15%;
+
+    --secondary: 30 18% 32%;
+    --secondary-foreground: 48 35% 92%;
+
+    --muted: 30 15% 35%;
+    --muted-foreground: 35 25% 65%;
+
+    --accent: 35 50% 65%;
+    --accent-foreground: 30 20% 15%;
+
+    --success: 35 45% 60%;
+    --success-foreground: 30 20% 15%;
+
+    --destructive: 25 30% 45%;
+    --destructive-foreground: 48 35% 92%;
+
+    --border: 30 20% 40%;
+    --input: 30 18% 30%;
+    --ring: 35 50% 65%;
+    
+    --sidebar-background: 30 12% 18%;
+    --sidebar-foreground: 48 35% 92%;
+    --sidebar-primary: 35 35% 60%;
+    --sidebar-primary-foreground: 30 20% 15%;
+    --sidebar-accent: 30 18% 25%;
+    --sidebar-accent-foreground: 48 35% 92%;
+    --sidebar-border: 30 20% 35%;
+    --sidebar-ring: 35 35% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  
+  *::-webkit-scrollbar {
+    display: none;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+    background: var(--gradient-stone);
+    background-attachment: fixed;
+    min-height: 100vh;
+    position: relative;
+    background-color: black;
+  }
+  
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        hsl(30 15% 20% / 0.15) 2px,
+        hsl(30 15% 20% / 0.15) 4px
+      );
+    pointer-events: none;
+    z-index: 0;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+}
+
+@layer utilities {
+  .shadow-bronze {
+    box-shadow: var(--shadow-bronze);
+  }
+  
+  .shadow-stone {
+    box-shadow: var(--shadow-stone);
+  }
+  
+  .shadow-emboss {
+    box-shadow: var(--shadow-emboss);
+  }
+  
+  .text-gradient-bronze {
+    background: var(--gradient-bronze);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .border-ornate {
+    border-style: solid;
+    border-width: 3px;
+    border-image: linear-gradient(
+      135deg,
+      hsl(35 45% 55%),
+      hsl(35 30% 45%),
+      hsl(35 45% 55%)
+    ) 1;
+  }
+  
+  .texture-stone {
+    background-image: 
+      radial-gradient(circle at 20% 50%, hsl(35 18% 25%) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, hsl(35 18% 27%) 0%, transparent 50%),
+      radial-gradient(circle at 40% 20%, hsl(30 18% 23%) 0%, transparent 50%);
+  }
+  
+  .animate-pulse-slow {
+    animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+      display: none;
+  }
+  .no-scrollbar {
+      -ms-overflow-style: none; 
+      scrollbar-width: none; 
+  }
+  
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.8;
+    }
+  }
+}
+
+
+.wallet-adapter-button {
+  background-color: transparent !important;
+  font-family: inherit !important;
+}
+
+.wallet-adapter-button:not([disabled]):hover {
+  background-color: transparent !important; 
+}
+

@@ -1,0 +1,19 @@
+{
+  "name": "referee-bot",
+  "version": "1.0.0",
+  "description": "Automated payout bot for Degen Colosseum",
+  "main": "bot.js",
+  "scripts": {
+    "start": "node bot.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@solana/web3.js": "^1.91.0",
+    "@supabase/supabase-js": "^2.39.0",
+    "bs58": "4.0.1",
+    "dotenv": "^16.4.0",
+    "node-fetch": "^3.3.0"
+  }
+}
